@@ -9,8 +9,8 @@ const Header = ({weather}) => {
     <div>
       <h1>City: {weather.name}</h1>
       <div className='current-temp'>
-        <p>Max: {weather.main.temp_max}°C</p>
-        <p>Min: {weather.main.temp_min}°C</p>
+        <p>Max: {Math.round(weather.main.temp_max)}°C</p>
+        <p>Min: {Math.round(weather.main.temp_min)}°C</p>
       </div>
     </div>
   )

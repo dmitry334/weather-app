@@ -1,6 +1,7 @@
 import { getWeeklyWeather } from 'API/WeatherAPI';
 import React, { useState, useEffect } from 'react';
-import { parse, format } from 'date-fns';
+import { format } from 'date-fns';
+import style from 'components/WeatherForecasts/WeatherForecasts.module.css';
 
 const WeatherForecasts = ({lat, lon}) => {
   const [weeklyWeather, setWeeklyWeather] = useState(null);
@@ -23,16 +24,15 @@ const WeatherForecasts = ({lat, lon}) => {
   
   return (
     <div>
-      <h2>7-Days Forecasts</h2>
-      <ul>
+      <h2>Today</h2>
+      <p>{format( new Date(), 'dd MMMM')}</p>
+      <ul className={style.forecast_list}>
       {weeklyWeather !== null ? (
         weeklyWeather.list.map((item) => {
-          const parsedDate = parse(item.dt_txt, 'yyyy-MM-dd HH:mm:ss', new Date());
-          const dayOfWeek = format(parsedDate, 'EEEE');
           return (
             <li key={item.dt}>
-              <p>{item.main.temp}°C</p>
-              <p>{dayOfWeek}</p>
+              <p>{Math.round(item.main.temp)}°C</p>
+              <img src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`} alt="" />
             </li>
           );
         })
