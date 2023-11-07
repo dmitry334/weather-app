@@ -16,7 +16,7 @@ const WeatherApp = () => {
       });
   }, []);
 
-  //console.log(weatherData);
+  console.log(weatherData);
 
   return (
     <div>

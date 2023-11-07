@@ -11,7 +11,6 @@ const WeatherForecasts = ({lat, lon}) => {
       try {
         const weatherData = await getWeeklyWeather(lat, lon);
         setWeeklyWeather(weatherData);
-        console.log(weatherData);
       } catch (error) {
         console.error('Error getting weather!', error);
       }
@@ -19,13 +18,18 @@ const WeatherForecasts = ({lat, lon}) => {
 
     fetchData();
   }, [lat, lon]);
-  
-  console.log(weeklyWeather);
-  
+
+  const currentTime = ( date ) => {
+    const [datePart, timePart] = date.split(" ");
+    const [hours, minutes, seconds] = timePart.split(":");
+    const time = `${hours}:${minutes}`;
+    return time;
+  }
+
   return (
     <div>
       <h2>Today</h2>
-      <p>{format( new Date(), 'dd MMMM')}</p>
+      <p>{format( new Date(), 'MMMM, d')}</p>
       <ul className={style.forecast_list}>
       {weeklyWeather !== null ? (
         weeklyWeather.list.map((item) => {
@@ -33,6 +37,7 @@ const WeatherForecasts = ({lat, lon}) => {
             <li key={item.dt}>
               <p>{Math.round(item.main.temp)}°C</p>
               <img src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`} alt="" />
+              <p>{currentTime(item.dt_txt)}</p>
             </li>
           );
         })
